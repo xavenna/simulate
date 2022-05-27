@@ -185,6 +185,7 @@ int main()
 		world[i+1][j].setHeat(world[i][j].getHeat());
 		world[i+1][j].setSubId(world[i][j].getSubId());
 		world[i][j].setId(0);
+		world[i][j].setSubId(0);
 		world[i][j].setUpdate(true);
 		world[i+1][j].setId(1);
 		world[i+1][j].setUpdate(true);
@@ -274,6 +275,7 @@ int main()
 		world[i-1][j].setHeat(world[i][j].getHeat());
 		world[i-1][j].setSubId(world[i][j].getSubId());
 		world[i][j].setId(0);
+		world[i][j].setSubId(0);
 		world[i][j].setUpdate(true);
 		world[i-1][j].setId(1);
 		world[i-1][j].setUpdate(true);
@@ -296,6 +298,7 @@ int main()
 		world[i-1][j].setHeat(world[i][j].getHeat());
 		world[i-1][j].setSubId(world[i][j].getSubId());
 		world[i][j].setId(0);
+		world[i][j].setSubId(0);
 		world[i][j].setUpdate(true);
 		world[i-1][j].setId(1);
 		world[i-1][j].setUpdate(true);
@@ -337,6 +340,7 @@ int main()
 		world[i+1][j].setHeat(world[i][j].getHeat());
 		world[i+1][j].setSubId(world[i][j].getSubId());
 		world[i][j].setId(0);
+		world[i][j].setSubId(0);
 		world[i][j].setUpdate(true);
 		world[i+1][j].setId(1);
 		world[i+1][j].setUpdate(true);
