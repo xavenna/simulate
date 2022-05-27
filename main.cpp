@@ -22,6 +22,13 @@ int main()
       world[i][j].area.setPosition(8*i,16+(8*j));
     }
   }
+  // (attempt to) integrate the texture map system from stellar-enigma 
+  TextureMap textureMap;
+  if(!textureMap.initialize("assets/texturemap/default.tm"))  //default texture map, stored in a file
+    std::cout << "Error: texture map not found\n";
+  //maybe make a function to generate this dynamically using maxSub
+  std::vector<int> subIdMapping = {0, 1, 4, 7, 8};
+
   //Heat is on a scale of 0-10; 0-2 = ice, 3-6 = liquid, 7-10 = gas, 9-10 = fire
   Cursor point;
   point.setXPos(0);
@@ -555,6 +562,7 @@ int main()
 	//end of loop
       }
     }//motion handling
+
     for(int i=0;i<32;i++) { //heat transfer
       for(int j=0;j<32;j++) {
 	float t = world[i][j].getHeat();
@@ -578,6 +586,7 @@ int main()
 	l[i][j] = t;
       }
     }
+
     for(int i=0;i<32;i++) { //update heat values, change states
       for(int j=0;j<32;j++) {
 	if(world[i][j].getId() != 0)  //l contains new heat values. If the space isn't empty, write heat values
@@ -617,39 +626,16 @@ int main()
 	
       }
     }
-    for(int i=0;i<32;i++) { //assign textures
-      for(int j=0;j<32;j++) {
+
+    for(int i=0;i<32;i++) {
+      for(int j=0;j<32;j++) {  //make sure that the subid transformation is always good and works (update: it doesn't)
+	assignTextureToNode(world[i][j], textureMap, (subIdMapping[world[i][j].getId()]+world[i][j].getSubId()));
 	world[i][j].setUpdate(false);
-	switch(world[i][j].getId()) {
-	case 1:
-	  if(world[i][j].getSubId() == 0)
-	    world[i][j].area.setTexture(water);
-	  else if(world[i][j].getSubId() == 1)
-	    world[i][j].area.setTexture(nitro);
-	  else if(world[i][j].getSubId() == 2)
-	    world[i][j].area.setTexture(lava);
-	  break;
-	case 2:
-	  if(world[i][j].getSubId() == 0)
-	    world[i][j].area.setTexture(ground);
-	  else if(world[i][j].getSubId() == 1)
-	    world[i][j].area.setTexture(ice);
-	  else if(world[i][j].getSubId() == 2)
-	    world[i][j].area.setTexture(wood);
-	  break;
-	case 3:
-	  world[i][j].area.setTexture(gas);
-	  break;
-	case 4:
-	  world[i][j].area.setTexture(fire);
-	  break;
-	default:
-	  world[i][j].area.setTexture(blank);
-	  break;
-	}
       }
     }
+
     switch(point.getId()) { //assign pointer textures
+      //make this not weird: make texture maps work for this too
     case 1:
       if(point.getSubId() == 0)
 	select.area.setTexture(water);
@@ -671,9 +657,6 @@ int main()
       break;
     case 4:
       select.area.setTexture(fire);
-      break;
-    case 5:
-      select.area.setTexture(ice);
       break;
     default:
       select.area.setTexture(blank);

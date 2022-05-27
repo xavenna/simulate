@@ -21,42 +21,6 @@ private:
     float heat;
     bool update;
 };
-int Node::getId() {
-    return id;
-}
-void Node::setSubId(int x) {
-    subid = x;
-}
-int Node::getSubId() {
-    return subid;
-}
-void Node::setId(int x) {
-    id = x;
-}
-void Node::setUpdate(bool x) {
-    update = x;
-}
-bool Node::getUpdate() {
-    return update;
-}
-void Node::setDirection(int x) {
-    direction = x;
-}
-int Node::getDirection() {
-    return direction;
-}
-void Node::setHeat(float x) {
-    heat = x;
-}
-float Node::getHeat() {
-    return heat;
-}
-Node::Node() {
-    subid = 0;
-    id = 0;
-    heat = 5.f;
-    direction = rand() % 2;
-}
 class Cursor {
 public:
     sf::Sprite area;
@@ -75,53 +39,17 @@ private:
     int id;
     int subid;
 };
-int Cursor::getXPos() {
-    return xpos;
-}
-int Cursor::getYPos() {
-    return ypos;
-}
-void Cursor::setXPos(int x) {
-    xpos = x;
-}
-void Cursor::setYPos(int x) {
-    ypos = x;
-}
-int Cursor::getId() {
-    return id;
-}
-void Cursor::setId(int x) {
-    id = x;
-}
-int Cursor::getSubId() {
-    return subid;
-}
-void Cursor::setSubId(int x) {
-    subid = x;
-}
-void Cursor::update() {
-    area.setPosition(xpos*8, 16+ypos*8);
-}
-int maxSub(int x) { //makes subid switching work
-    switch(x) {
-    case 0:
-        return 0;
-        break;
-    case 1:
-        return 2;
-        break;
-    case 2:
-        return 2;
-        break;
-    case 3:
-        return 0;
-        break;
-    case 4:
-        return 0;
-        break;
-    default:
-        return 0;
-        break;
-    }
-}
+class TextureMap {
+  //contains texture mappings for use when assigning textures to sprites
+public:
+  std::vector<sf::Texture> mapping;
+  sf::Texture& getTexture(const int&);
+  void assign(int, sf::Texture);
+  bool initialize(const std::string&);
+  int size();
+};
+
+void assignTextureToNode(Node&, TextureMap&, int);
+
+int maxSub(int);
 #endif // SIMULATE_H_INCLUDED
