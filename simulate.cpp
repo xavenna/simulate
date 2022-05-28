@@ -7,7 +7,7 @@
 #include <SFML/Audio.hpp>
 #include "simulate.h"
 
-
+//class member function definitions
 int Node::getId() {
     return id;
 }
@@ -105,10 +105,11 @@ int TextureMap::size() {
   return mapping.size();
 }
 
-void assignTextureToNode(Node& node, TextureMap& textureMap, int id) {
-  node.area.setTexture(textureMap.mapping.at(id));
+void assignTextureToNode(sf::Sprite& sprite, TextureMap& textureMap, int id) {
+  sprite.setTexture(textureMap.mapping.at(id));
 }
 
+//miscellaneous utility functions
 int maxSub(int x) { //makes subid switching work
     switch(x) {
     case 0:

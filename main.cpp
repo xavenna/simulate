@@ -4,9 +4,8 @@
 //to do:
 //make it so fire can't destroy other things
 //restructure code to make it less of an awful bowl of spaghetti
+//  -in progress
 
-//fix lava so it doesn't immediately turn into steam
-// Update: turns to steam when it falls, not when moving side-to-side
 int main()
 {
   //initialization
@@ -84,9 +83,13 @@ int main()
 	  break;
 	case sf::Keyboard::E: //cycle material (positive)
 	  point.setId((point.getId() != 4) ? point.getId()+1: 0); //change 4 to max base material value
+	  if(point.getSubId() > maxSub(point.getId()))
+	    point.setSubId(maxSub(point.getId()));
 	  break;
 	case sf::Keyboard::Q: //cycle material (negative)
 	  point.setId((point.getId() != 0) ? point.getId()-1: 4); //change 4 to max base material value
+	  if(point.getSubId() > maxSub(point.getId()))
+	    point.setSubId(maxSub(point.getId()));
 	  break;
 	case sf::Keyboard::LBracket: //cycle submaterial (positive)
 	  point.setSubId((point.getSubId() != maxSub(point.getId())) ? point.getSubId()+1 : 0);
@@ -633,39 +636,12 @@ int main()
 
     for(int i=0;i<32;i++) {
       for(int j=0;j<32;j++) {  //make sure that the subid transformation is always good and works (update: it doesn't)
-	assignTextureToNode(world[i][j], textureMap, (subIdMapping[world[i][j].getId()]+world[i][j].getSubId()));
+	assignTextureToNode(world[i][j].area, textureMap, (subIdMapping[world[i][j].getId()]+world[i][j].getSubId()));
 	world[i][j].setUpdate(false);
       }
     }
 
-    switch(point.getId()) { //assign pointer textures
-      //make this not weird: make texture maps work for this too
-    case 1:
-      if(point.getSubId() == 0)
-	select.area.setTexture(water);
-      else if(point.getSubId() == 1)
-	select.area.setTexture(nitro);
-      else if(point.getSubId() == 2)
-	select.area.setTexture(lava);
-      break;
-    case 2:
-      if(point.getSubId() == 0)
-	select.area.setTexture(ground);
-      else if(point.getSubId() == 1)
-	select.area.setTexture(ice);
-      else if(point.getSubId() == 2)
-	select.area.setTexture(wood);
-      break;
-    case 3:
-      select.area.setTexture(gas);
-      break;
-    case 4:
-      select.area.setTexture(fire);
-      break;
-    default:
-      select.area.setTexture(blank);
-      break;
-    }
+    assignTextureToNode(select.area, textureMap, (subIdMapping[point.getId()]+point.getSubId()));
     point.update();         //drawing to screen
     window.clear();
     for(int i=0;i<32;i++) {

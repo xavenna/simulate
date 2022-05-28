@@ -49,7 +49,7 @@ public:
   int size();
 };
 
-void assignTextureToNode(Node&, TextureMap&, int);
+void assignTextureToNode(sf::Sprite&, TextureMap&, int);
 
 int maxSub(int);
 #endif // SIMULATE_H_INCLUDED
