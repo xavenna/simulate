@@ -27,34 +27,16 @@ int main()
     std::cout << "Error: texture map not found\n";
   //maybe make a function to generate this dynamically using maxSub
   std::vector<int> subIdMapping = {0, 1, 4, 7, 8};
+  sf::Texture pointer;
+  pointer.loadFromFile("assets/point.png");
+  sf::Texture title;
+  title.loadFromFile("assets/title.png");
 
   //Heat is on a scale of 0-10; 0-2 = ice, 3-6 = liquid, 7-10 = gas, 9-10 = fire
   Cursor point;
   point.setXPos(0);
   point.setYPos(0);
   point.setId(1);
-  sf::Texture water;
-  sf::Texture blank;
-  sf::Texture pointer;
-  sf::Texture ground;
-  sf::Texture gas;
-  sf::Texture title;
-  sf::Texture fire;
-  sf::Texture ice;
-  sf::Texture nitro;
-  sf::Texture wood;
-  sf::Texture lava;
-  water.loadFromFile("assets/materials.png", sf::IntRect(0, 0, 8, 8));
-  blank.loadFromFile("assets/materials.png", sf::IntRect(16, 0, 8, 8));
-  pointer.loadFromFile("assets/materials.png", sf::IntRect(8, 0, 8, 8));
-  ground.loadFromFile("assets/materials.png", sf::IntRect(16, 8, 8, 8));
-  gas.loadFromFile("assets/materials.png", sf::IntRect(24, 0, 8, 8));
-  title.loadFromFile("assets/title.png");
-  fire.loadFromFile("assets/materials.png", sf::IntRect(32, 0, 8, 8));
-  ice.loadFromFile("assets/materials.png", sf::IntRect(32, 8, 8, 8));
-  nitro.loadFromFile("assets/materials.png", sf::IntRect(24, 8, 8, 8));
-  wood.loadFromFile("assets/materials.png", sf::IntRect(8, 8, 8, 8));
-  lava.loadFromFile("assets/materials.png", sf::IntRect(0, 8, 8, 8));
   point.area.setTexture(pointer);
   sf::Sprite top;
   top.setTexture(title);
